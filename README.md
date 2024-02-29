@@ -40,4 +40,4 @@ Conseils de développement
 
 Gestion des erreurs : Implémentez la gestion des erreurs pour les appels API pour traiter les cas où l'API est indisponible ou retourne une erreur.
 Vos extensions de fichiers doivent être en .tsx
-Ne pas hésiter à séparer vos routes d'api dans des dossiers/fichiers différents.
+Ne pas hésiter à séparer vos routes d'api dans des dossiers/fichiers différents.# Pokedex
