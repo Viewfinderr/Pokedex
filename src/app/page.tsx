@@ -1,12 +1,18 @@
+'use client';
 import Image from "next/image";
-import PokemonList from "../components/PokemonList";
 
+import React from 'react';
+import PokemonList from '@/components/PokemonList';
+import TypeFilter from '@/components/TypeFilter';
 
-export default function Home() {
+const Home: React.FC = () => {
   return (
-    <main>
-      <h1>Pokemon App</h1>
+    <div>
+      <h1>Pokédex</h1>
+      <TypeFilter />
       <PokemonList />
-    </main>
+    </div>
   );
-}
+};
+
+export default Home;
