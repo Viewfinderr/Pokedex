@@ -9,7 +9,7 @@ const PokemonList: React.FC = () => {
   useEffect(() => {
     const fetchPokemonData = async () => {
       try {
-        const response = await fetch('https://pokeapi.co/api/v2/pokemon/?limit=500');
+        const response = await fetch('https://pokeapi.co/api/v2/pokemon/?limit=200');
         const data = await response.json();
 
         setPokemonList(data.results);

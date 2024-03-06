@@ -1,29 +1,50 @@
-import React, { useEffect, useState } from 'react';
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
 
-
-// commme dans java, dans typescript tu as aussi tes constructeurs
-// qui vont établir ce qu'il va y avoir à l'intérieur
 interface PokemonCardProps {
   name: string;
   types: string[];
 }
 
-// on n'oublie pas d'annoncer le type à chaque fois
 interface PokemonDetails {
   id: number;
   name: string;
   types: { type: { name: string } }[];
   sprites: { front_default: string };
 }
-XMLDocument
+
+const typeImages: Record<string, string> = {
+  normal: 'types/Normal.png',
+  fire: 'types/Fire.png',
+  water: 'types/Water.png',
+  electric: 'types/Electric.png',
+  grass: 'types/Grass.webp',
+  ice: 'types/Ice.webp',
+  fighting: 'types/Fighting.png',
+  poison: 'types/Poison.png',
+  ground: 'types/Ground.png',
+  flying: 'types/Flying.png',
+  psychic: 'types/Psy.png',
+  bug: 'types/Bug.png',
+  rock: 'types/Rock.png',
+  ghost: 'types/Ghost.webp',
+  dragon: 'types/Dragon.webp',
+  dark: 'types/Dark.png',
+  steel: 'types/Steel.webp',
+  fairy: 'types/Fairy.png',
+};
 
 const PokemonCard: React.FC<PokemonCardProps> = ({ name, types }) => {
-  const [pokemonDetails, setPokemonDetails] = useState<PokemonDetails | null>(null);
+  const [pokemonDetails, setPokemonDetails] = useState<PokemonDetails | null>(
+    null
+  );
 
   useEffect(() => {
     const fetchPokemonDetails = async () => {
       try {
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+        const response = await fetch(
+          `https://pokeapi.co/api/v2/pokemon/${name}`
+        );
         const data = await response.json();
 
         setPokemonDetails({
@@ -40,16 +61,40 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ name, types }) => {
     fetchPokemonDetails();
   }, [name]);
 
+
   return (
     <div className="pokemon-card">
       {pokemonDetails && (
         <>
-          {/* Afficher le nom du Pokémon */}
-          <p className="pokemon-name">{pokemonDetails.name}</p>
-          {/* Afficher l'image du Pokémon */}
-          <img className="pokemon-image" src={pokemonDetails.sprites.front_default} alt={`${name} sprite`} />
-          {/* Afficher les types du Pokémon */}
-          <p className="pokemon-types">Types: {types.join(', ')}</p>
+          {/* Encapsuler le contenu dans un lien */}
+          <Link legacyBehavior href={`/pokemon/${pokemonDetails.name}`}>
+            <a>
+              {/* Afficher le nom du Pokémon */}
+              <p>{pokemonDetails.name}</p>
+              <img
+                className="pokemon-image"
+                src={pokemonDetails.sprites.front_default}
+                alt={`${pokemonDetails.name} sprite`}
+              />
+              {/* Afficher l'image du Pokémon */}
+              {/* Afficher les types du Pokémon */}
+              <div className="pokemon-types">
+                {pokemonDetails.types.map((type, index) => (
+                  <div
+                    key={index}
+                    className={`pokemon-type ${type.type.name}`}
+                  >
+                    <img
+                      className="img-type"
+                      src={typeImages[type.type.name]}
+                      alt={`${type.type.name} type`}
+                    />
+                    <p>{type.type.name}</p>
+                  </div>
+                ))}
+              </div>
+            </a>
+          </Link>
         </>
       )}
     </div>
